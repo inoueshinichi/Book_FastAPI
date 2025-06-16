@@ -1,4 +1,5 @@
-
+""" 基礎
+"""
 import os
 import sys
 
@@ -20,4 +21,6 @@ app = FastAPI()
 @app.get("/")
 async def get_hello():
     return {"message": "Hello World"}
+
+
 

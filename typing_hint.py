@@ -51,6 +51,7 @@ def get_profile(
         profile["age"] = age
     return profile
 
+# 型アノテーション
 def process_value(
         value: Annotated[int, "範囲: 0 <= value <= 100"]
     ) -> None:
