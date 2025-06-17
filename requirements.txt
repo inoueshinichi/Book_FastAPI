@@ -4,3 +4,5 @@ uvicorn
 fastapi
 pydantic
 httpx
+sqlalchemy
+aiosqlite
