@@ -72,42 +72,42 @@ from schemas.memo import (
 '''EntryPoint'''
 app = FastAPI()
 
-
 # メモ新規登録
-@app.post("/memos", response_model=ResponseSchema)
-async def create_memo(memo: InsertAndUpdateMemoSchema):
-    logger.debug(memo)
-    return ResponseSchema(message="メモが正常に登録されました")
+# @app.post("/memos", response_model=ResponseSchema)
+# async def create_memo(memo: InsertAndUpdateMemoSchema):
+#     logger.debug(memo)
+#     return ResponseSchema(message="メモが正常に登録されました")
 
 
 # メモ情報全件取得
-@app.get("/memos", response_model=list[MemoSchema])
-async def get_memos_list():
-    return [
-        MemoSchema(title="タイトル1", description="詳細1", memo_id=1),
-        MemoSchema(title="タイトル2", description="詳細2", memo_id=2),
-        MemoSchema(title="タイトル3", description="詳細3", memo_id=3),
-    ]
+# @app.get("/memos", response_model=list[MemoSchema])
+# async def get_memos_list():
+#     return [
+#         MemoSchema(title="タイトル1", description="詳細1", memo_id=1),
+#         MemoSchema(title="タイトル2", description="詳細2", memo_id=2),
+#         MemoSchema(title="タイトル3", description="詳細3", memo_id=3),
+#     ]
 
 
 # 特定のメモ情報取得
-@app.get('/memos/{memo_id}', response_model=MemoSchema)
-async def get_memo_detail(memo_id: int):
-    return MemoSchema(title=f"タイトル{memo_id}", description=f"詳細{memo_id}", memo_id=memo_id)
+# @app.get('/memos/{memo_id}', response_model=MemoSchema)
+# async def get_memo_detail(memo_id: int):
+#     return MemoSchema(title=f"タイトル{memo_id}", description=f"詳細{memo_id}", memo_id=memo_id)
 
 
 # 特定のメモを更新する
-@app.put("/memos/{memo_id}", response_model=ResponseSchema)
-async def get_memo_detail(memo_id: int, memo: InsertAndUpdateMemoSchema):
-    logger.debug(f"{memo_id}: {memo}")
-    return ResponseSchema(message="メモが正常に更新されました")
+# @app.put("/memos/{memo_id}", response_model=ResponseSchema)
+# async def get_memo_detail(memo_id: int, memo: InsertAndUpdateMemoSchema):
+#     logger.debug(f"{memo_id}: {memo}")
+#     return ResponseSchema(message="メモが正常に更新されました")
 
 
 # 特定のメモを削除する
-@app.delete("/memos/{memo_id}", response_model=ResponseSchema)
-async def remove_memo(memo_id: int):
-    logger.deug(f"{memo_id}")
-    return ResponseSchema(message="メモが正常に削除されました")
+# @app.delete("/memos/{memo_id}", response_model=ResponseSchema)
+# async def remove_memo(memo_id: int):
+#     logger.deug(f"{memo_id}")
+#     return ResponseSchema(message="メモが正常に削除されました")
+
 
 
 # バリデーションエラーのカスタムハンドラ
