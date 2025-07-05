@@ -52,6 +52,9 @@ from sqlalchemy import (
     select,
 )
 
+from fastapi.middleware.cors import CORSMiddleware
+from routers.memo import router as memo_router
+
 
 '''DB/ORM'''
 # ベースクラスの定義
@@ -68,10 +71,31 @@ from schemas.memo import (
     ResponseSchema,
 )
 
-
 '''EntryPoint'''
 app = FastAPI()
 
+# origins = [
+#     "http://localhost",
+#     "http://localhost:8080", # もしフロントエンドがこのポートで動作しているなら追加
+#     "http://127.0.0.1:5500", # ★ここが重要！フロントエンドのオリジンを明示的に許可
+# ]
+origins = ["*"]
+
+'''CORS設定'''
+app.add_middleware(
+    CORSMiddleware,
+    # 許可するオリジンを指定
+    allow_origins=origins,
+    # 認証情報を含むリクエストを許可
+    allow_credentials=True,
+    # 許可するHTTPメソッドを指定
+    allow_methods=["*"],
+    # 許可するHTTPヘッダーを指定
+    allow_headers=["*"]
+)
+
+
+'''下記は、Router単位でまとめた'''
 # メモ新規登録
 # @app.post("/memos", response_model=ResponseSchema)
 # async def create_memo(memo: InsertAndUpdateMemoSchema):
@@ -108,6 +132,9 @@ app = FastAPI()
 #     logger.deug(f"{memo_id}")
 #     return ResponseSchema(message="メモが正常に削除されました")
 
+# ルーターのマウント
+app.include_router(memo_router)
+
 
 
 # バリデーションエラーのカスタムハンドラ
@@ -115,6 +142,6 @@ app = FastAPI()
 async def validation_exception_handler(exc: ValidationError):
     # ValidationErrorが発生した場合にクライアントに返すレスポンス定義
     return JSONResponse(status_code=422, content={
-        "detail": exec.errors(), # Pydanticが提供するエラーリスト
-        "body": exec.model, # エラー発生時の入力データ
+        "detail": exc.errors(), # Pydanticが提供するエラーリスト
+        "body": exc.model, # エラー発生時の入力データ
     })

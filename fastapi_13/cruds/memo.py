@@ -42,6 +42,7 @@ async def insert_memo(
     Returns:
         memo_model.Memo: 作成したメモのモデル
     """
+
     logger.info("=== 新規登録：開始 ===")
     new_memo = memo_model.Memo(**memo_data.model_dump())
     db_session.add(new_memo)
@@ -53,6 +54,7 @@ async def insert_memo(
 
 # 全件取得
 async def get_memos(db_session: AsyncSession) -> list[memo_model.Memo]:
+
     logger.info("=== 全件取得：開始 ===")
     result = await db_session.execute(select(memo_model.Memo))
     memos = result.scalars().all()
@@ -63,6 +65,7 @@ async def get_memos(db_session: AsyncSession) -> list[memo_model.Memo]:
 # 1件取得
 async def get_memo_by_id(db_session: AsyncSession,
                          memo_id: int) -> memo_model.Memo | None:
+    
     logger.info("=== 1件取得 ===")
     result = await db_session.execute(
         select(memo_model.Memo).where(memo_model.memo_id == memo_id)
@@ -78,6 +81,7 @@ async def update_memo(
     memo_id: int,
     target_data: memo_schema.InsertAndUpdateMemoSchema   
 ) -> memo_model.Memo | None:
+    
     logger.info("=== データ更新：開始 ===")
     memo = await get_memo_by_id(db_session, memo_id)
     if memo:
@@ -95,6 +99,7 @@ async def delete_memo(
         db_session: AsyncSession,
         memo_id: int,
 ) -> memo_model.Memo | None:
+    
     logger.info("=== データ削除：開始 ===")
     memo = await get_memo_by_id(db_session, memo_id)
     if memo:

@@ -39,4 +39,5 @@ class Memo(Base):
     created_at = Column(DateTime, default=datetime.now())
     updated_at = Column(DateTime)
 
-
+    def __repr__(self):
+        return f"<Memo(id={self.id}, title='{self.title}')>"
